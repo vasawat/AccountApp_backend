@@ -1,6 +1,5 @@
 import express from "express";
 const router = express.Router();
-import User from "../models/userModel.js";
 import Account from "../models/accountModel.js";
 import xlsx from 'xlsx';
 import fs from 'fs';
@@ -209,10 +208,10 @@ router.post("/summarize/:accountId", async (req, res)=> {
     start.setHours(0, 0, 0, 0);
     end.setHours(23, 59, 59, 999);
     if (startDate) {
-        start = new Date(Date.UTC(new Date(startDate).getUTCFullYear(), new Date(startDate).getUTCMonth(), new Date(startDate).getUTCDate() + 1));
+        start = new Date(Date.UTC(new Date(startDate).getUTCFullYear(), new Date(startDate).getUTCMonth(), new Date(startDate).getUTCDate()));
     }
     if (endDate) {
-        end = new Date(Date.UTC(new Date(endDate).getUTCFullYear(), new Date(endDate).getUTCMonth(), new Date(endDate).getUTCDate() + 1, 23, 59, 59));
+        end = new Date(Date.UTC(new Date(endDate).getUTCFullYear(), new Date(endDate).getUTCMonth(), new Date(endDate).getUTCDate(), 23, 59, 59));
     }
     try {
         const acc = await Account.findById(accountId);
