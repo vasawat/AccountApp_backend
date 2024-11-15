@@ -14,18 +14,19 @@ router.post("/add/:userId", async (req, res) => {
         return
     }
 
-    const account = new Account({
-        name: name,
-        owner: userId,
-    });
-
-    account.save()
-        .then(() => {
-            res.status(200).send("Account added successfully");
-        })
-        .catch((error) => {
-            res.status(500).json({ message: "Server error", error });
+    try {
+        const account = new Account({
+            name: name,
+            owner: userId,
         });
+
+        account.save();
+
+        res.status(201).send(account);
+    } catch (err) {
+        console.log(err);
+        res.status(500).send({ message: "Server error", error: err });
+    }
 
 });
 
@@ -36,10 +37,7 @@ router.get("/:userId", async (req, res) => {
         res.status(404).send("User not found")
         return
     }
-
-
     let query = {};
-
     if (name) {
         query.name = name;
     }
@@ -47,13 +45,13 @@ router.get("/:userId", async (req, res) => {
         query.owner = userId;
     }
 
-    Account.find(query)
-        .then((accounts) => {
-            res.status(200).json(accounts);
-        })
-        .catch((error) => {
-            res.status(500).json({ message: "Server error", error });
-        });
+    try {
+        const accounts = await Account.find(query);
+        res.status(200).json(accounts);
+    } catch (error) {
+        res.status(500).json({ message: "Server error", error });
+    }
+
 });
 
 router.delete("/delete/:Accountid", async (req, res) => {
@@ -63,13 +61,18 @@ router.delete("/delete/:Accountid", async (req, res) => {
         return
     }
 
-    Account.findByIdAndDelete(Accountid)
-        .then(() => {
-            res.status(200).send("Account deleted successfully");
-        })
-        .catch((error) => {
-            res.status(500).json({ message: "Server error", error });
-        });
+    try{
+        const acc = await Account.findById(Accountid);
+        if(!acc) {
+            res.status(404).send("Account not found");
+            return
+        }
+
+        await Account.findByIdAndDelete(Accountid);
+        res.status(200).send("Account deleted successfully");
+    }catch (error) {
+        res.status(500).json({ message: "Server error", error });
+    }
 });
 
 export default router;
