@@ -47,7 +47,7 @@ router.post("/register", (req, res) => {
         }).then(() => {
             res.status(201).send(user);
         }).catch((err) => {
-            res.status(500).send("this email already exists")
+            res.status(500).send({message: "Server error", error: err})
         })
         
     })
@@ -62,7 +62,7 @@ router.delete("/delete", async (req, res) => {
         await User.findByIdAndDelete(userId).then(() => {
             res.status(200).send("User deleted successfully")
         }).catch((err) => {
-            res.status(500).send("Invalid User Id")
+            res.status(500).send({message: "Server error", error: err})
         })
     }
 
