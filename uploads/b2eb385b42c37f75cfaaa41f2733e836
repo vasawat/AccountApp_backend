@@ -1,0 +1,6 @@
+﻿name,note,amount,type,category,
+test1,mytesttransaction,100,income,salary,
+test2,mytesttransaction,200,income,salary,
+test3,mytesttransaction,300,income,salary,
+test4,mytesttransaction,400,expenses,food,
+test5,mytesttransaction,500,expenses,travel,

@@ -1,0 +1,6 @@
+﻿name,note,amount,type,category,date
+test1,mytesttransaction,100,income,salary,12/11/2024
+test2,mytesttransaction,200,income,salary,13/11/2024
+test3,mytesttransaction,300,income,salary,14/11/2024
+test4,mytesttransaction,400,expenses,food,15/11/2024
+test5,mytesttransaction,500,expenses,travel,16/11/2024
